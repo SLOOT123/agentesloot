@@ -1,0 +1,12 @@
+{
+  "name": "Agente · planificar y ejecutar",
+  "description": "Planifica dependencias, busca fuentes, guarda código y lo comprueba en Docker con actividad visible.",
+  "prompt": "agente.md",
+  "memory": true,
+  "tools": ["task_plan", "web_search", "web_read", "project_write", "project_read", "sandbox_exec", "calculator", "memory_search", "research_graph", "download_tools", "download_url"],
+  "task_planning": true,
+  "self_correction": true,
+  "learn_from_errors": true,
+  "max_repairs": 2,
+  "minimum_context_window": 16384
+}

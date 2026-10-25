@@ -1,0 +1,8 @@
+{
+  "name": "Investigador",
+  "description": "Busca fuentes con SearXNG y distingue evidencia de inferencias.",
+  "prompt": "investigador.md",
+  "memory": true,
+  "research": true,
+  "tools": ["web_search", "web_read", "memory_search", "calculator"]
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hindustanhack AI Chat - Community Edition</title>
+    <style>
+        body { background: #090d16; color: #e2e8f0; font-family: monospace; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 260px; background: #030712; border-right: 1px solid #1f2937; padding: 20px; display: flex; flex-direction: column; }
+        .main-chat { flex: 1; display: flex; flex-direction: column; background: #090d16; }
+        .chat-box { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .message { padding: 12px 18px; border-radius: 8px; max-width: 70%; line-height: 1.5; }
+        .user { background: #1e293b; align-self: flex-end; border: 1px solid #334155; }
+        .assistant { background: #111827; align-self: flex-start; border: 1px solid #1f2937; color: #38bdf8; }
+        .input-area { padding: 20px; background: #030712; border-top: 1px solid #1f2937; display: flex; gap: 10px; }
+        input { flex: 1; background: #090d16; border: 1px solid #374151; color: white; padding: 12px; border-radius: 6px; font-family: monospace; }
+        button { background: #10b981; color: white; border: none; padding: 0 20px; font-weight: bold; cursor: pointer; border-radius: 6px; }
+        button:hover { background: #059669; }
+        h3 { color: #f43f5e; margin-top: 0; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>HINDUSTANHACK CHAT</h3>
+        <p style="font-size: 12px; color: #9ca3af;">Conectado a la red comunitaria, jefe.</p>
+        <button onclick="clearChat()">Nueva Conversación</button>
+    </div>
+    <div class="main-chat">
+        <div class="chat-box" id="chatBox">
+            <div class="message assistant">¡Qué onda, jefe! ¿Qué putas vamos a resolver hoy? Suelta la pregunta, carajo.</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí..." onkeypress="checkEnter(event)">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function appendMessage(text, sender) {
+            const chatBox = document.getElementById('chatBox');
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.innerText = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            input.value = '';
+
+            // Simulación de respuesta rápida de la red
+            setTimeout(() => {
+                appendMessage("¡Recibido en el sistema, carajo! Procesando tu solicitud al instante, jefe.", 'assistant');
+            }, 500);
+        }
+
+        function checkEnter(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function clearChat() {
+            document.getElementById('chatBox.innerHTML = \'<div class="message assistant">¡Conversación limpia, jefe! A darle de nuevo.</div>\';
+        }
+    </script>
+</body>
+</html>

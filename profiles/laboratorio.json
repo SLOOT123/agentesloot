@@ -1,0 +1,12 @@
+{
+  "name": "Laboratorio · corregir y comprobar",
+  "description": "Ejecuta Python o shell en Docker, revisa resultados y recuerda correcciones observadas.",
+  "prompt": "laboratorio.md",
+  "memory": true,
+  "research": false,
+  "tools": ["sandbox_exec", "web_search", "web_read", "research_graph", "calculator", "memory_search", "project_write", "project_read"],
+  "self_correction": true,
+  "learn_from_errors": true,
+  "max_repairs": 2,
+  "minimum_context_window": 16384
+}

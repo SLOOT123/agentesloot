@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Chat del Sistema Comunitario.">
+  <title>Chat | Comunidad Pro</title>
+  <link rel="stylesheet" href="/static/style.css?v=20261021-chat-scroll">
+  <meta name="csrf-token" content="{{csrf_token}}">
+  <!-- Conserva tu app.js original: contiene sendMessage() y clearScreen(). -->
+  <script src="/static/api.js" defer></script>
+  <script src="/static/app.js" defer></script>
+  <script src="/static/terminal.js?v=20261021-chat-scroll" defer></script>
+  <script src="/static/monitor.js?v=20261021-chat-scroll" defer></script>
+  <script src="/static/projects.js" defer></script>
+  <script src="/static/activity.js?v=20261021-chat-scroll" defer></script>
+  <script src="/static/attachments.js" defer></script>
+  <script src="/static/agent.js?v=20261021-chat-scroll" defer></script>
+  <script src="/static/chat.js" defer></script>
+  <script src="/static/effects.js" defer></script>
+</head>
+<body class="chat-body">
+  <div class="connection-field" aria-hidden="true">
+    <canvas class="connection-canvas"></canvas>
+    <img class="brand-watermark" src="/static/logo.jpg" alt="" width="640" height="640">
+  </div>
+  <a class="skip-link" href="#userInput">Ir al cuadro de mensaje</a>
+  <div class="chat-layout">
+    <aside class="sidebar" id="chatSidebar" aria-label="Conversaciones">
+      <div class="sidebar-brand">
+        <span class="brand-icon" aria-hidden="true">
+          <img class="brand-image" src="/static/logo.jpg" alt="" width="36" height="36">
+        </span>
+        <span>Comunidad <strong>Pro</strong></span>
+        <button class="icon-btn sidebar-close" id="closeSidebar" type="button" aria-label="Cerrar menú">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="top-sidebar">
+        <button type="button" class="new-chat-btn" onclick="clearScreen()">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Nuevo chat
+        </button>
+      </div>
+      <p class="sidebar-label">TU ESPACIO</p>
+      <nav class="history-list" aria-label="Canales">
+        <a class="history-item active" id="communityMode" href="#chatBox" aria-current="page">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-1 1v-8.5A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          <span>Canal general principal</span>
+        </a>
+        <button class="history-item" id="agentMode" type="button">Mi agente · privado</button>
+        <div class="agent-controls" id="agentControls" hidden>
+          <label for="agentProfile">Perfil</label>
+          <select id="agentProfile"></select>
+          <label for="agentBackend">Proveedor</label>
+          <select id="agentBackend"></select>
+          <p class="field-help">Cambiar perfil o proveedor abre otra conversación.</p>
+          <button class="scene-toggle" id="checkModel" type="button">Comprobar modelo</button>
+          <button class="scene-toggle" id="openMemory" type="button">Mi memoria documental</button>
+          <button class="scene-toggle" id="openLessons" type="button">Correcciones aprendidas</button>
+          <p class="agent-model-status" id="modelStatus" role="status"></p>
+        </div>
+        <section id="attachmentPanel" class="attachment-panel" aria-label="Archivos adjuntos privados" hidden>
+          <h2>Archivos del chat</h2>
+          <button id="uploadAttachment" type="button" class="scene-toggle">＋ Subir archivos</button>
+          <input id="attachmentInput" type="file" multiple hidden accept="text/*,image/*,application/pdf,.md,.txt,.csv,.tsv,.json,.yaml,.yml,.xml,.html,.py,.js,.ts,.css,.log,.docx,.xlsx,.pptx">
+          <p class="field-help" id="attachmentDrop">También puedes arrastrarlos aquí o pegar una imagen en el mensaje.</p>
+          <p id="attachmentStatus" class="field-help" role="status" aria-live="polite"></p>
+          <div id="attachmentFiles" class="attachment-files"></div>
+          <details class="attachment-help"><summary>Formatos y alcance</summary><p>TXT, Markdown, código, CSV, JSON, HTML, XML, PDF, DOCX, XLSX, PPTX e imágenes. Hasta 20 MB por archivo y 20 archivos por conversación. PDF: texto de hasta 50 páginas; análisis visual de hasta 3 vistas por mensaje. Las imágenes animadas usan el primer fotograma. Los archivos permanecen privados en este chat.</p></details>
+        </section>
+        <div id="agentConversations" class="agent-conversations" aria-label="Tus conversaciones privadas" hidden></div>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="scene-toggle" class="scene-toggle" type="button" aria-pressed="false" hidden>Pausar fondo</button>
+        <div class="user-badge">
+          <span class="avatar user-av" aria-hidden="true">CP</span>
+          <div class="user-details"><strong id="sessionUsername">Espacio comunitario</strong><span>Comunidad Pro</span></div>
+        </div>
+        <form action="/logout" method="post">
+          <a class="scene-toggle account-link-button" href="/account">Mi cuenta · Correo de recuperación</a>
+          <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+          <button type="submit" class="logout-link">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H4v16h5 M13 8l4 4-4 4 M8 12h13"/></svg>
+          Cerrar sesión
+          </button>
+        </form>
+      </div>
+    </aside>
+
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Cerrar menú de conversaciones" hidden></button>
+
+    <main class="main-container" id="chatMain" data-mode="community">
+      <header class="top-header">
+        <button class="icon-btn menu-toggle" id="openSidebar" type="button" aria-label="Abrir menú de conversaciones" aria-controls="chatSidebar" aria-expanded="false">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <span class="brand-icon header-logo" aria-hidden="true">
+          <img class="brand-image" src="/static/logo.jpg" alt="" width="40" height="40">
+        </span>
+        <div class="header-title"><h1>Comunidad Pro</h1><p>Conversa con la comunidad y la IA</p></div>
+        <span class="header-channel">Canal general · IA</span>
+        <span class="sync-status" id="syncStatus" role="status" aria-live="polite">Conectando…</span>
+      </header>
+
+      <div id="conversationScroll" class="conversation-scroll" tabindex="0" aria-label="Desplazamiento de la conversación">
+      <section class="chat-viewport" id="chatBox" role="log" aria-label="Mensajes de la conversación" aria-live="polite" aria-relevant="additions text" tabindex="0">
+        <div class="message-row assistant welcome-row">
+          <div class="message-content welcome-content">
+            <div class="message-body">
+              <div class="logo-orbit chat-emblem">
+                <img class="brand-image" src="/static/logo.jpg" alt="Logo del Sistema Comunitario" width="140" height="140">
+              </div>
+              <p class="eyebrow">CANAL COMUNITARIO</p>
+              <h2 class="welcome-title">Conecta con tu comunidad</h2>
+              <p class="welcome-description">La IA responde automáticamente a tus mensajes en este canal compartido. Abre Mi agente para conversar en privado o usar herramientas.</p>
+              <div class="prompt-grid" aria-label="Ideas para comenzar">
+                <button type="button" class="prompt-card" data-prompt="Hola a todos, me presento: "><span aria-hidden="true">01</span>Presentarme<small>Saluda a la comunidad</small></button>
+                <button type="button" class="prompt-card" data-prompt="Quiero compartir esta idea con la comunidad: "><span aria-hidden="true">02</span>Compartir una idea<small>Construir algo entre todos</small></button>
+                <button type="button" class="prompt-card" data-prompt="¿Alguien puede ayudarme con esta duda? "><span aria-hidden="true">03</span>Pedir ayuda<small>Pregunta a otros usuarios</small></button>
+                <button type="button" class="prompt-card" data-prompt="Les comparto este recurso que puede ser útil: "><span aria-hidden="true">04</span>Compartir un recurso<small>Aprender en comunidad</small></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="agent-activity" id="projectPanel" aria-label="Archivos de esta conversación privada" hidden>
+        <details>
+          <summary>Archivos y descargas</summary>
+          <form id="mediaDownloadForm" class="media-download-form">
+            <label for="mediaDownloadUrl">Enlace del vídeo, página o archivo</label>
+            <input id="mediaDownloadUrl" type="url" required maxlength="2000" placeholder="https://…" autocomplete="off">
+            <div class="media-download-options">
+              <label for="mediaDownloadMode" class="sr-only">Qué descargar</label>
+              <select id="mediaDownloadMode">
+                <option value="video">Vídeo completo</option>
+                <option value="audio">Solo audio · MP3</option>
+                <option value="file">Archivo original</option>
+                <option value="pdf">PDF de la página</option>
+              </select>
+              <button id="mediaDownloadSubmit" type="submit" class="scene-toggle">Descargar</button>
+            </div>
+            <p class="field-help">Enlaces directos y páginas compatibles. La descarga continúa en segundo plano.</p>
+            <p id="mediaDownloadStatus" class="field-help" role="status"></p>
+          </form>
+          <p id="projectStatus" class="field-help" role="status"></p>
+          <a id="downloadProject" class="scene-toggle" hidden>Descargar proyecto ZIP</a>
+          <div id="projectFiles" class="activity-events"></div>
+        </details>
+      </section>
+
+      <section id="workMonitor" class="work-monitor" aria-label="Trabajo en segundo plano" hidden>
+        <div class="monitor-heading"><strong>Trabajo en segundo plano</strong><button id="openWorkMonitor" class="scene-toggle" type="button">Ampliar monitor</button></div>
+        <p id="workMonitorState" class="monitor-state" role="status"></p>
+        <p id="workMonitorHint" class="field-help"></p>
+        <section id="executionTerminal" class="execution-terminal" aria-labelledby="executionTerminalTitle">
+          <div class="terminal-heading">
+            <div class="terminal-title"><span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span><strong id="executionTerminalTitle">Consola de ejecución</strong></div>
+            <span id="terminalState" class="terminal-state" role="status">Sin ejecución</span>
+          </div>
+          <div class="terminal-toolbar">
+            <span id="terminalContext">Procesos de esta conversación</span>
+            <div><button id="cancelAgentJob" type="button" hidden>Cancelar trabajo</button><button id="terminalFollow" type="button" aria-pressed="true">Seguir salida</button><button id="terminalToggle" type="button" aria-expanded="true" aria-controls="terminalOutput">Ocultar</button></div>
+          </div>
+          <div id="terminalOutput" class="terminal-output" role="log" aria-live="off" aria-label="Comandos, salida y estados observados" tabindex="0"></div>
+          <div class="terminal-footer"><span id="terminalConnection">Esperando actividad</span><span id="terminalCount">0 líneas</span></div>
+        </section>
+        <button id="recoverPromptChat" class="scene-toggle monitor-recovery" type="button" hidden>Abrir un chat con Mi agente</button>
+      </section>
+
+      </div>
+
+      <div class="input-container-wrapper">
+        <label for="userInput" class="sr-only">Tu mensaje para la comunidad</label>
+        <div class="input-box">
+          <button type="button" id="attachFiles" class="attach-button" aria-label="Adjuntar archivos al chat privado" title="Adjuntar archivos" hidden>＋</button>
+          <textarea id="userInput" rows="1" placeholder="Escribe tu mensaje…" autocomplete="off" aria-describedby="composerHelp"></textarea>
+          <button type="button" onclick="sendMessage()" class="send-btn" id="sendBtn" aria-label="Enviar mensaje" title="Enviar mensaje">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>
+          </button>
+        </div>
+        <p id="composerHelp" class="disclaimer">Canal compartido: la IA responde automáticamente. Los mensajes y respuestas son visibles para la comunidad.</p>
+        <p id="composerStatus" class="composer-status" role="status" aria-live="polite"></p>
+      </div>
+    </main>
+  </div>
+  <dialog id="workMonitorDialog" class="agent-dialog work-monitor-dialog" aria-labelledby="workMonitorTitle">
+    <button id="closeWorkMonitor" class="icon-btn dialog-close" type="button" aria-label="Cerrar monitor">×</button>
+    <h2 id="workMonitorTitle">Trabajo en segundo plano</h2>
+    <p class="field-help">Sigue las acciones y los resultados de esta conversación. Puedes cerrar esta vista y seguir escribiendo.</p>
+    <details class="monitor-help">
+      <summary>Cómo leer este monitor</summary>
+      <ol>
+        <li>Envía tu petición en Mi agente. Por ejemplo: «Crea un archivo Python que calcule 2 + 2, ejecútalo y comprueba el resultado».</li>
+        <li>Sigue el estado y los especialistas. Si se ejecuta código, aparecerán el nombre de su contenedor y su consola.</li>
+        <li>Comprueba el cierre: código de salida 0 significa que el programa terminó sin errores de ejecución. Revisa también sus pruebas y la respuesta del chat.</li>
+      </ol>
+    </details>
+    <p id="monitorCurrent" class="monitor-state" role="status"></p>
+    <p id="monitorGuide" class="field-help"></p>
+    <div class="monitor-grid">
+      <section class="monitor-card"><h3>Especialistas y modelo</h3><div id="monitorWorkers"></div></section>
+      <section class="monitor-card"><h3>Plan de trabajo</h3><div id="monitorPlan"></div></section>
+    </div>
+    <section class="monitor-card"><h3>Contenedores Docker</h3><p class="field-help">Cada ejecución de código usa un contenedor temporal. Los valores de CPU y memoria son límites configurados.</p><div id="monitorContainers"></div></section>
+    <section class="monitor-card"><h3>Descargas en segundo plano</h3><div id="monitorDownloads"></div></section>
+    <section class="monitor-card"><h3>Últimos pasos</h3><ol id="monitorTimeline" class="monitor-timeline"></ol></section>
+  </dialog>
+  <dialog id="downloadTraceDialog" class="agent-dialog work-monitor-dialog" aria-labelledby="downloadTraceTitle">
+    <button id="closeDownloadTrace" class="icon-btn dialog-close" type="button" aria-label="Cerrar pasos de descarga">×</button>
+    <h2 id="downloadTraceTitle">Herramientas y pasos de descarga</h2>
+    <p id="downloadTraceState" class="monitor-state" role="status"></p>
+    <p class="field-help">Acciones reales del descargador. HTTP y yt-dlp son llamadas de herramientas; FFmpeg y ffprobe muestran sus comandos. Se conservan hasta 40 pasos recientes.</p>
+    <div id="downloadTraceSteps" class="download-trace-steps"></div>
+  </dialog>
+  <dialog id="memoryDialog" class="agent-dialog" aria-labelledby="memoryTitle">
+    <button id="closeMemory" class="icon-btn dialog-close" type="button" aria-label="Cerrar memoria">×</button>
+    <h2 id="memoryTitle">Mi memoria documental</h2>
+    <p class="field-help">Documentos privados de tu cuenta. Los fragmentos pertinentes se envían al modelo elegido; con una API externa, salen de tu equipo. Guardarlos no entrena el modelo. Evita incluir contraseñas o claves.</p>
+    <form id="memoryForm" class="memory-form">
+      <label for="memoryName">Título</label>
+      <input id="memoryName" required maxlength="120" placeholder="Por ejemplo: mi proyecto">
+      <label for="memoryText">Texto que quieres recordar</label>
+      <textarea id="memoryText" required maxlength="20000" rows="6"></textarea>
+      <button class="btn-primary" type="submit">Guardar documento</button>
+    </form>
+    <p id="memoryStatus" class="composer-status" role="status"></p>
+    <ul id="memoryList" class="memory-list"></ul>
+  </dialog>
+  <dialog id="lessonsDialog" class="agent-dialog" aria-labelledby="lessonsTitle">
+    <button id="closeLessons" class="icon-btn dialog-close" type="button" aria-label="Cerrar correcciones">×</button>
+    <h2 id="lessonsTitle">Correcciones aprendidas</h2>
+    <p class="field-help">Se recuerdan fallos y scripts posteriores que terminaron sin errores. Eso no prueba que sus conclusiones sean correctas. Tu valoración ayuda a conservar o descartar cada experiencia.</p>
+    <p id="lessonsStatus" class="composer-status" role="status"></p>
+    <div id="lessonsList" class="lessons-list"></div>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,28 @@
+name: fash-toch-search
+services:
+  searxng:
+    image: ${SEARXNG_IMAGE:-ghcr.io/searxng/searxng@sha256:b4e34a39f76b1c860bbc53a0f35b10492029b2b18ef1d868df464fe43d7e0b93}
+    user: "65534:65534"
+    read_only: true
+    init: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 128
+    ports:
+      - "127.0.0.1:8888:8080"
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:?Ejecuta scripts/setup_search.py primero}
+      SEARXNG_BASE_URL: http://127.0.0.1:8888/
+      SEARXNG_PORT: "8080"
+      SEARXNG_BIND_ADDRESS: "0.0.0.0"
+      FORCE_OWNERSHIP: "false"
+      PYTHONDONTWRITEBYTECODE: "1"
+      HOME: /tmp
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=64m,mode=1777
+      - /var/cache/searxng:rw,nosuid,nodev,size=32m,mode=1777
+      - /etc/searxng:rw,nosuid,nodev,size=4m,mode=1777

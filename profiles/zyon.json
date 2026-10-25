@@ -1,0 +1,17 @@
+{
+  "name": "ZYON",
+  "display_name": "ZYON",
+  "description": "Conversación directa, formato [Zyon], entregas concretas, archivos, búsquedas y comprobaciones con herramientas.",
+  "behavior_note": "Los MD se conservan sin cambios y se enlazan como documentos de consulta. Se leen fragmentos pertinentes, sin repetir copias idénticas ni concatenar todos los documentos como instrucciones activas. La conexión no añade permisos a las herramientas.",
+  "prompt": "zyon-conversacion.md",
+  "prompt_mode": "references",
+  "reference_documents": ["prompts/base.md", "prompts/zyon-conversacion.md", "prompts/zyon.md", "docs/referencias/ZYON.md", "docs/referencias/ZYON-personalizado-ed32e625daad.md"],
+  "presentation": "zyon",
+  "memory": true,
+  "tools": ["task_plan", "web_search", "web_read", "project_write", "project_read", "sandbox_exec", "calculator", "memory_search", "research_graph", "download_tools", "download_url"],
+  "task_planning": true,
+  "self_correction": true,
+  "learn_from_errors": true,
+  "max_repairs": 2,
+  "minimum_context_window": 16384
+}

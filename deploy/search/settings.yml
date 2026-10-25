@@ -1,0 +1,24 @@
+use_default_settings: true
+search:
+  formats: [html, json]
+  autocomplete: ""
+  max_page: 1
+server:
+  limiter: false
+  public_instance: false
+  image_proxy: false
+outgoing:
+  request_timeout: 6.0
+engines:
+  - name: bing
+    disabled: false
+  - name: yahoo
+    disabled: false
+  - name: brave
+    disabled: true
+  - name: duckduckgo
+    disabled: true
+  - name: google cse
+    disabled: true
+  - name: wikipedia
+    disabled: true

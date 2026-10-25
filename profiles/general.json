@@ -1,0 +1,8 @@
+{
+  "name": "Mi agente",
+  "description": "Asistente privado con tus instrucciones, memoria y búsqueda web cuando la necesites.",
+  "prompt": "general.md",
+  "memory": true,
+  "research": false,
+  "tools": ["calculator", "memory_search", "web_search", "web_read", "download_tools", "download_url"]
+}

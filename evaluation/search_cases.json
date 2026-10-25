@@ -1,0 +1,106 @@
+{
+  "name": "Búsqueda técnica · base ilustrativa v1",
+  "annotation": "Extractos redactados como ejemplos, no descargados de las URLs. Relevancia 0..3 asignada manualmente. Las etiquetas no verifican hechos actuales. Añadir consultas reales revisadas antes de ajustar parámetros o modelos.",
+  "cases": [
+    {
+      "id": "python-tests", "split": "train", "query": "Python unittest ejecutar pruebas",
+      "candidates": [
+        {"url": "https://example.org/noticias", "title": "Noticias del día", "excerpt": "Actualidad y entretenimiento."},
+        {"url": "https://docs.python.org/3/library/unittest.html", "title": "Python unittest ejecutar pruebas", "excerpt": "Casos de prueba, aserciones y descubrimiento de tests."},
+        {"url": "https://example.org/viajes", "title": "Viajes", "excerpt": "Rutas de vacaciones."},
+        {"url": "https://docs.python.org/3/library/doctest.html", "title": "Python doctest", "excerpt": "Ejecutar pruebas de ejemplos de documentación."}
+      ],
+      "judgments": {"https://example.org/noticias": 0, "https://docs.python.org/3/library/unittest.html": 3, "https://example.org/viajes": 0, "https://docs.python.org/3/library/doctest.html": 1}
+    },
+    {
+      "id": "docker-isolation", "split": "train", "query": "Docker contenedor sin red network none",
+      "candidates": [
+        {"url": "https://example.org/cocina", "title": "Recetas", "excerpt": "Preparar una cena."},
+        {"url": "https://docs.docker.com/engine/network/drivers/none/", "title": "Docker network none", "excerpt": "Contenedor sin conectividad de red."},
+        {"url": "https://example.org/deporte", "title": "Resultados", "excerpt": "Competencias deportivas."},
+        {"url": "https://docs.docker.com/reference/cli/docker/container/run/", "title": "Docker run", "excerpt": "Opciones del contenedor y selección de network."}
+      ],
+      "judgments": {"https://example.org/cocina": 0, "https://docs.docker.com/engine/network/drivers/none/": 3, "https://example.org/deporte": 0, "https://docs.docker.com/reference/cli/docker/container/run/": 2}
+    },
+    {
+      "id": "sqlite-transactions", "split": "train", "query": "SQLite transacciones commit rollback",
+      "candidates": [
+        {"url": "https://example.org/clima", "title": "Clima", "excerpt": "Pronóstico del tiempo."},
+        {"url": "https://www.sqlite.org/lang_transaction.html", "title": "SQLite transacciones commit rollback", "excerpt": "Control de transacciones de la base de datos."},
+        {"url": "https://example.org/cine", "title": "Películas", "excerpt": "Estrenos de cine."},
+        {"url": "https://www.sqlite.org/atomiccommit.html", "title": "SQLite atomic commit", "excerpt": "Atomicidad de los cambios en transacciones."}
+      ],
+      "judgments": {"https://example.org/clima": 0, "https://www.sqlite.org/lang_transaction.html": 3, "https://example.org/cine": 0, "https://www.sqlite.org/atomiccommit.html": 2}
+    },
+    {
+      "id": "ollama-tools", "split": "validation", "query": "Ollama herramientas tool calling",
+      "candidates": [
+        {"url": "https://example.org/publicidad", "title": "Oferta del mes", "excerpt": "Productos para el hogar."},
+        {"url": "https://docs.ollama.com/capabilities/tool-calling", "title": "Ollama tool calling", "excerpt": "Llamadas a herramientas y resultados en conversaciones."},
+        {"url": "https://example.org/jardines", "title": "Jardinería", "excerpt": "Plantas de temporada."},
+        {"url": "https://ollama.com/blog/tool-support", "title": "Ollama tool support", "excerpt": "Soporte de herramientas en la API."}
+      ],
+      "judgments": {"https://example.org/publicidad": 0, "https://docs.ollama.com/capabilities/tool-calling": 3, "https://example.org/jardines": 0, "https://ollama.com/blog/tool-support": 2}
+    },
+    {
+      "id": "fastapi-validation", "split": "validation", "query": "FastAPI validar datos request body",
+      "candidates": [
+        {"url": "https://example.org/musica", "title": "Música", "excerpt": "Conciertos de la semana."},
+        {"url": "https://fastapi.tiangolo.com/tutorial/body/", "title": "FastAPI request body", "excerpt": "Validar datos recibidos con modelos Pydantic."},
+        {"url": "https://example.org/autos", "title": "Automóviles", "excerpt": "Mantenimiento del motor."},
+        {"url": "https://fastapi.tiangolo.com/tutorial/body-fields/", "title": "FastAPI body fields", "excerpt": "Restricciones para validar campos de datos."}
+      ],
+      "judgments": {"https://example.org/musica": 0, "https://fastapi.tiangolo.com/tutorial/body/": 3, "https://example.org/autos": 0, "https://fastapi.tiangolo.com/tutorial/body-fields/": 2}
+    },
+    {
+      "id": "dag-cycles", "split": "test", "query": "Python graphlib TopologicalSorter detectar ciclos grafo",
+      "candidates": [
+        {"url": "https://example.org/historia", "title": "Historia", "excerpt": "Historia de las ciudades."},
+        {"url": "https://docs.python.org/3/library/graphlib.html", "title": "Python graphlib TopologicalSorter", "excerpt": "Orden topológico de un grafo y CycleError para detectar ciclos."},
+        {"url": "https://example.org/cafe", "title": "Café", "excerpt": "Métodos de preparación."},
+        {"url": "https://docs.python.org/3/library/collections.html", "title": "Python collections", "excerpt": "Contenedores auxiliares para almacenar nodos de un grafo."}
+      ],
+      "judgments": {"https://example.org/historia": 0, "https://docs.python.org/3/library/graphlib.html": 3, "https://example.org/cafe": 0, "https://docs.python.org/3/library/collections.html": 1}
+    },
+    {
+      "id": "bm25-ranking", "split": "test", "query": "BM25 ranking k1 b relevancia búsqueda",
+      "candidates": [
+        {"url": "https://example.org/hogar", "title": "Decoración", "excerpt": "Muebles y colores."},
+        {"url": "https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index-modules-similarity.html", "title": "BM25 similarity k1 b", "excerpt": "Ranking de búsqueda por relevancia, frecuencia de términos y longitud."},
+        {"url": "https://example.org/pan", "title": "Panadería", "excerpt": "Preparación de masa."},
+        {"url": "https://lucene.apache.org/core/9_12_1/core/org/apache/lucene/search/similarities/BM25Similarity.html", "title": "BM25Similarity", "excerpt": "Modelo BM25 para ranking con parámetros k1 y b."}
+      ],
+      "judgments": {"https://example.org/hogar": 0, "https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index-modules-similarity.html": 3, "https://example.org/pan": 0, "https://lucene.apache.org/core/9_12_1/core/org/apache/lucene/search/similarities/BM25Similarity.html": 3}
+    },
+    {
+      "id": "precision-recall", "split": "test", "query": "precision recall métricas clasificación",
+      "candidates": [
+        {"url": "https://example.org/playa", "title": "La playa", "excerpt": "Vacaciones de verano."},
+        {"url": "https://scikit-learn.org/stable/modules/model_evaluation.html", "title": "Métricas de clasificación precision recall", "excerpt": "Evaluación de predicciones de clasificación."},
+        {"url": "https://example.org/campo", "title": "El campo", "excerpt": "Cultivos y cosechas."},
+        {"url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html", "title": "precision recall fscore support", "excerpt": "Métricas de precisión y recuperación para clasificación."}
+      ],
+      "judgments": {"https://example.org/playa": 0, "https://scikit-learn.org/stable/modules/model_evaluation.html": 3, "https://example.org/campo": 0, "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html": 3}
+    },
+    {
+      "id": "paraphrase-with-keyword-noise", "split": "test", "query": "evitar repetir acciones al reintentar una solicitud",
+      "candidates": [
+        {"url": "https://developer.mozilla.org/en-US/docs/Glossary/Idempotent", "title": "Idempotent", "excerpt": "Idempotency means multiple identical HTTP requests have the same intended effect as a single request."},
+        {"url": "https://example.org/publicidad-reintentar", "title": "Evitar repetir acciones al reintentar una solicitud", "excerpt": "Anuncio sin explicación técnica: compra nuestro producto."},
+        {"url": "https://example.org/palabras-solicitud", "title": "Repetir acciones solicitud", "excerpt": "Colección de palabras sin solución ni evidencia."},
+        {"url": "https://example.org/solicitud-vacia", "title": "Reintentar una solicitud", "excerpt": "Enlace vacío sin información pertinente."}
+      ],
+      "judgments": {"https://developer.mozilla.org/en-US/docs/Glossary/Idempotent": 3, "https://example.org/publicidad-reintentar": 0, "https://example.org/palabras-solicitud": 0, "https://example.org/solicitud-vacia": 0}
+    },
+    {
+      "id": "authority-is-not-keywords", "split": "test", "query": "Python graphlib CycleError comportamiento",
+      "candidates": [
+        {"url": "https://docs.python.org/3/library/graphlib.html#graphlib.CycleError", "title": "graphlib", "excerpt": "CycleError is raised when cycles exist in the graph."},
+        {"url": "https://example.org/cycleerror-anuncio", "title": "Python graphlib CycleError comportamiento", "excerpt": "Python graphlib CycleError comportamiento. Publicidad sin información técnica."},
+        {"url": "https://example.org/cycleerror-etiquetas", "title": "Python graphlib comportamiento", "excerpt": "Etiquetas populares y enlaces promocionales."},
+        {"url": "https://example.org/cycleerror-vacio", "title": "CycleError comportamiento", "excerpt": "No contiene documentación."}
+      ],
+      "judgments": {"https://docs.python.org/3/library/graphlib.html#graphlib.CycleError": 3, "https://example.org/cycleerror-anuncio": 0, "https://example.org/cycleerror-etiquetas": 0, "https://example.org/cycleerror-vacio": 0}
+    }
+  ]
+}

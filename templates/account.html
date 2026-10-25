@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="same-origin">
+  <title>{{title}} | Sistema Comunitario</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/effects.js" defer></script>
+  <script src="/static/account.js" defer></script>
+</head>
+<body class="login-body">
+  <div class="login-background" aria-hidden="true"><video class="login-video" autoplay muted loop playsinline preload="metadata"><source src="/static/login.mp4" type="video/mp4"></video></div>
+  <div class="connection-field" aria-hidden="true"><canvas class="connection-canvas"></canvas></div>
+  <header class="login-brand"><span class="brand-icon"><img class="brand-image" src="/static/logo.jpg" alt="" width="40" height="40"></span><span>Sistema <strong>Comunitario</strong></span></header>
+  <main class="login-main">
+    <section class="login-card account-card" aria-labelledby="account-title">
+      <div class="logo-orbit login-emblem"><img class="brand-image" src="/static/logo.jpg" alt="" width="72" height="72"></div>
+      <p class="eyebrow">TU CUENTA</p>
+      <h1 id="account-title">{{title}}</h1>
+      <p class="subtitle">{{subtitle}}</p>
+      {{content}}
+    </section>
+  </main>
+  <footer class="login-footer"><span>Sistema Comunitario · Portal de acceso</span></footer>
+</body>
+</html>

@@ -1,0 +1,123 @@
+{
+  "dataset": "Búsqueda técnica · base ilustrativa v1",
+  "split": "test",
+  "k": 3,
+  "case_count": 5,
+  "metrics": {
+    "baseline": {
+      "precision_at_k": 0.333333,
+      "recall_at_k": 0.7,
+      "mrr_at_k": 0.7,
+      "ndcg_at_k": 0.670494
+    },
+    "ranked": {
+      "precision_at_k": 0.533333,
+      "recall_at_k": 1.0,
+      "mrr_at_k": 0.733333,
+      "ndcg_at_k": 0.8
+    }
+  },
+  "cases": [
+    {
+      "id": "dag-cycles",
+      "baseline": {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 0.5,
+        "mrr_at_k": 0.5,
+        "ndcg_at_k": 0.5787641110093001
+      },
+      "ranked": {
+        "precision_at_k": 0.6666666666666666,
+        "recall_at_k": 1.0,
+        "mrr_at_k": 1.0,
+        "ndcg_at_k": 1.0
+      },
+      "selected_urls": [
+        "https://docs.python.org/3/library/graphlib.html",
+        "https://docs.python.org/3/library/collections.html",
+        "https://example.org/historia"
+      ]
+    },
+    {
+      "id": "bm25-ranking",
+      "baseline": {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 0.5,
+        "mrr_at_k": 0.5,
+        "ndcg_at_k": 0.38685280723454163
+      },
+      "ranked": {
+        "precision_at_k": 0.6666666666666666,
+        "recall_at_k": 1.0,
+        "mrr_at_k": 1.0,
+        "ndcg_at_k": 1.0
+      },
+      "selected_urls": [
+        "https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index-modules-similarity.html",
+        "https://lucene.apache.org/core/9_12_1/core/org/apache/lucene/search/similarities/BM25Similarity.html",
+        "https://example.org/hogar"
+      ]
+    },
+    {
+      "id": "precision-recall",
+      "baseline": {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 0.5,
+        "mrr_at_k": 0.5,
+        "ndcg_at_k": 0.38685280723454163
+      },
+      "ranked": {
+        "precision_at_k": 0.6666666666666666,
+        "recall_at_k": 1.0,
+        "mrr_at_k": 1.0,
+        "ndcg_at_k": 1.0
+      },
+      "selected_urls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html",
+        "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html",
+        "https://example.org/playa"
+      ]
+    },
+    {
+      "id": "paraphrase-with-keyword-noise",
+      "baseline": {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 1.0,
+        "mrr_at_k": 1.0,
+        "ndcg_at_k": 1.0
+      },
+      "ranked": {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 1.0,
+        "mrr_at_k": 0.3333333333333333,
+        "ndcg_at_k": 0.5
+      },
+      "selected_urls": [
+        "https://example.org/publicidad-reintentar",
+        "https://example.org/palabras-solicitud",
+        "https://developer.mozilla.org/en-US/docs/Glossary/Idempotent"
+      ]
+    },
+    {
+      "id": "authority-is-not-keywords",
+      "baseline": {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 1.0,
+        "mrr_at_k": 1.0,
+        "ndcg_at_k": 1.0
+      },
+      "ranked": {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 1.0,
+        "mrr_at_k": 0.3333333333333333,
+        "ndcg_at_k": 0.5
+      },
+      "selected_urls": [
+        "https://example.org/cycleerror-anuncio",
+        "https://example.org/cycleerror-etiquetas",
+        "https://docs.python.org/3/library/graphlib.html#graphlib.CycleError"
+      ]
+    }
+  ],
+  "scope": "Corpus ilustrativo etiquetado manualmente; no mide exactitud factual, red real ni generalización. No se entrenaron pesos."
+}

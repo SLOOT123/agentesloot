@@ -1,0 +1,86 @@
+{
+  "default_backend": "local",
+  "backends": {
+    "local": {
+      "label": "Ollama local",
+      "adapter": "ollama",
+      "base_url": "http://127.0.0.1:11434",
+      "model": "llama3.2:3b",
+      "api_key_env": "OLLAMA_API_KEY",
+      "context_window": 16384,
+      "max_output_tokens": 1024,
+      "temperature": 0,
+      "verify_tools": true
+    },
+    "vision": {
+      "label": "Visión local · Qwen3-VL",
+      "purpose": "vision",
+      "adapter": "ollama",
+      "base_url": "http://127.0.0.1:11434",
+      "model": "qwen3-vl:2b-instruct",
+      "api_key_env": "OLLAMA_API_KEY",
+      "context_window": 8192,
+      "max_output_tokens": 768,
+      "temperature": 0,
+      "verify_tools": false
+    },
+    "externo": {
+      "label": "API compatible",
+      "adapter": "openai_compatible",
+      "base_url": "https://api.openai.com/v1",
+      "model": "",
+      "api_key_env": "AGENT_API_KEY",
+      "context_window": 16384,
+      "max_output_tokens": 1024,
+      "verify_tools": false,
+      "output_token_field": "max_completion_tokens",
+      "system_role": "system"
+    }
+  },
+  "limits": {
+    "run_timeout_seconds": 180,
+    "request_timeout_seconds": 90,
+    "max_model_calls": 8,
+    "max_tool_calls": 8,
+    "max_concurrent_runs": 2,
+    "max_message_chars": 8000,
+    "history_messages": 30
+  },
+  "sandbox": {
+    "enabled": true,
+    "image": "python@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f",
+    "timeout_seconds": 15,
+    "memory_mb": 256,
+    "cpu_limit": 1,
+    "pids_limit": 32,
+    "max_output_bytes": 12000
+  },
+  "multi_agent": {
+    "enabled": true,
+    "max_parallel_jobs": 2,
+    "max_pending_jobs": 20,
+    "max_parallel_workers": 2,
+    "max_parallel_model_calls": 1,
+    "max_searches_per_worker": 2,
+    "max_reads_per_worker": 2,
+    "max_sources": 6,
+    "source_chars": 1800,
+    "max_model_calls": 5,
+    "max_repairs": 1,
+    "timeout_seconds": 600
+  },
+  "downloads": {
+    "enabled": true,
+    "persistent_recovery": true,
+    "timeout_seconds": 1800,
+    "max_file_mb": 250
+  },
+  "attachments": {
+    "enabled": true,
+    "vision_backend": "vision",
+    "max_file_mb": 20,
+    "max_files": 20,
+    "max_total_mb": 100,
+    "max_visual_pages": 3
+  }
+}
